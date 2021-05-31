@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    "target": "es2018",
+    "module": "es2015",
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": false,
+    //"outFile": "./public/index.js",
+    "outDir": "./public",
+    "rootDir": "./src",
+    "tsBuildInfoFile": "./.vscode/ts.build.info",
+    "removeComments": false,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}
