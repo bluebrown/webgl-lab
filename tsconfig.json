@@ -2,11 +2,10 @@
   "compilerOptions": {
     "incremental": true,
     "target": "es2018",
-    "module": "es2015",
+    "module": "commonjs",
     "declaration": false,
     "declarationMap": false,
-    "sourceMap": false,
-    //"outFile": "./public/index.js",
+    "sourceMap": true,
     "outDir": "./public",
     "rootDir": "./src",
     "tsBuildInfoFile": "./.vscode/ts.build.info",

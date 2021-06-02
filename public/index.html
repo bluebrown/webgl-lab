@@ -6,41 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.0.0/modern-normalize.min.css"
-        integrity="sha512-ISS7cAi1PEhQ8jnbJpJZMd29NlhNj4AWYyLOSp2CE/CsHxTCu+r+t0D2yoJudVrd0/8fTVPUVDzY5Tvli75u/g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-        body {
-            display: grid;
-            place-content: center;
-            height: 100vh;
-            background-color: gray;
-        }
-
-        section {
-            height: 600px;
-            width: 800px;
-            padding: .5rem;
-            border: 2.5px yellow dashed;
-        }
-
         canvas {
-            display: block;
-            width: 100%;
-            height: 100%;
+            border: 2px solid black;
+            background-color: black;
+        }
+
+        video {
+            display: none;
         }
     </style>
 </head>
 
 <body>
-    <section>
-        <canvas id="screen"></canvas>
-    </section>
-
-    <script src="./index.js" type="module"></script>
-
-
+    <canvas id="glcanvas" width="640" height="480"></canvas>
+    <script src="./bundle.js" type="module"></script>
 </body>
 
 </html>
