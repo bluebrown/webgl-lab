@@ -2,7 +2,7 @@
 'use strict'
 
 import { mat4 } from 'gl-matrix'
-import { getContext, compileShader } from './engine'
+import { getContext, compileShader, animationLoop, writeBuf } from './engine'
 
 // initialize gl
 const gl = getContext('#canvas')
@@ -32,26 +32,25 @@ const aVertexPosition = gl.getAttribLocation(simpleShader, 'aVertexPosition')
 const uModelViewMatrix = gl.getUniformLocation(simpleShader, 'uModelViewMatrix')
 const uProjectionMatrix = gl.getUniformLocation(simpleShader, 'uProjectionMatrix')
 
-// set up perspective matrix
 const canvas = gl.canvas as HTMLCanvasElement
 const projectionMatrix = mat4.create();
+const modelViewMatrix = mat4.create();
+
+// set up perspective matrix
 mat4.perspective(projectionMatrix, 45 * Math.PI / 180, canvas.clientWidth / canvas.clientHeight, 0.1, 255);
 
 // set up model matrix
-// every object is rendered -12 unites on the z axis
-const modelViewMatrix = mat4.create();
 mat4.translate(modelViewMatrix, modelViewMatrix, [-0.0, 0.0, -12.0]);
 
 // create position buffer
-const positions = [
+const positionBuffer = gl.createBuffer();
+
+writeBuf(gl, positionBuffer, [
   1.0, 1.0,
   -1.0, 1.0,
   1.0, -1.0,
   -1.0, -1.0,
-];
-const positionBuffer = gl.createBuffer();
-gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+])
 
 // start using the shader program
 gl.useProgram(simpleShader);
@@ -66,8 +65,13 @@ gl.vertexAttribPointer(aVertexPosition, 2, gl.FLOAT, false, 0, 0);
 gl.enableVertexAttribArray(aVertexPosition);
 
 // draw the scene
-requestAnimationFrame(function draw(now: number) {
-  console.log(now);
+animationLoop((deltaTime) => {
+
+  // manipulate buffers a bit
+
+  // ...
+
+  // the clear screen and redraw
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 })

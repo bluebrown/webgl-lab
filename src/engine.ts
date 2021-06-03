@@ -1,3 +1,5 @@
+import { mat4, ReadonlyVec2, ReadonlyVec3 } from 'gl-matrix'
+
 export function getContext(canvasSelector: string) {
     const canvas = document.querySelector(canvasSelector) as HTMLCanvasElement;
     const gl = canvas.getContext('webgl2')
@@ -52,4 +54,14 @@ export function animationLoop(draw: (deltaTime: number) => void) {
         requestAnimationFrame(tick)
     }
     requestAnimationFrame(tick)
+}
+
+export function writeBuf(
+    gl: WebGL2RenderingContext,
+    buf: WebGLBuffer | null,
+    data: any, target = gl.ARRAY_BUFFER,
+    usage = gl.STATIC_DRAW
+) {
+    gl.bindBuffer(target, buf)
+    gl.bufferData(target, new Float32Array(data), usage)
 }
