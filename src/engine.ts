@@ -1,7 +1,8 @@
 import { mat4, ReadonlyVec2, ReadonlyVec3 } from 'gl-matrix'
 
 export function getContext(canvasSelector: string) {
-    const canvas = document.querySelector(canvasSelector) as HTMLCanvasElement;
+    const canvas = document.querySelector(canvasSelector) as HTMLCanvasElement | null;
+    if (!canvas) throw new Error("canvas selector not found")
     const gl = canvas.getContext('webgl2')
     if (!gl) throw new Error("could not create rendering context")
     return gl
@@ -46,14 +47,24 @@ export function compileShader(gl: WebGL2RenderingContext, vsSource: string, fsSo
 
 export function animationLoop(draw: (deltaTime: number) => void) {
     let then = 0.0
+    let frameId: number | null
     function tick(now: number) {
         now *= 0.001;  // convert to seconds
         const deltaTime = now - then;
         then = now;
         draw(deltaTime)
-        requestAnimationFrame(tick)
+        frameId = requestAnimationFrame(tick)
     }
-    requestAnimationFrame(tick)
+    return function toggle() {
+        if (!frameId) {
+            frameId = requestAnimationFrame(tick)
+            return true
+        }
+        cancelAnimationFrame(frameId)
+        frameId = null
+        return false
+
+    }
 }
 
 export function writeBuf(
@@ -64,4 +75,12 @@ export function writeBuf(
 ) {
     gl.bindBuffer(target, buf)
     gl.bufferData(target, new Float32Array(data), usage)
+}
+
+
+export function oscillator(freq: number) {
+    const value = -1
+    return function oscillate(timeDelta: number) {
+        return value
+    }
 }
